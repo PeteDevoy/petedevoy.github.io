@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="color-scheme" content="light dark">
+
+    <title>Peter Devoy - Portfolio Website</title>
+    <link rel="stylesheet" href="/main.css"></link>
+    <script src="/main.js"></script>
+</head>
+
+<body>
+    <pd-header></pd-header>
+    <main>
+        <h1>Portfolio Website</h1>
+        <p>
+            This page offers a brief overview of the decisions I made when choosing the approach and stack (or lack thereof) for this very website.    
+        <h2>KISS Won</h2>
+            <p>
+                Ultimately, I opted to construct this site using straightforward HTML, CSS, and frontend JavaScript*
+            <p>
+                I must say it's a joy to be living in the age of Web Components and the Fetch API.  Together they make code reuse painless :&rbbrk;            
+            <details>
+                <summary>*Dirty Secret</summary>
+                <p>
+                    TypeScript is nice but I find developing without a build step more fun.  I feel like I enjoy JavaScript in the same way some people enjoy free climbing.  At least for a project like this one.
+            </details>
+
+        <h2>Considered alternatives</h2>
+        <h3>Wordpress/Other CMS</h3>
+        <h4>Reasons For</h4>
+        <ul>
+            <li>Structure</li>
+            <li>SEO</li>
+            <li>Set-up speed</li>
+        </ul>
+        <h4>Reasons Against</h4>
+        <ul>
+            <li>Would need to code plugins to display certain things in the way I desire</li>
+            <li>Hack-magnet if self-hosted</li>
+            <li>Limitations of a blog-light structure</li>
+        </ul>
+        
+        <h3>Neo4j-backed Solution</h3>
+        <h4>Reasons For</h4>
+        <ul>
+            <li>Opportunity to play more with graph databases</li>
+            <li>Flexible sufacing of data and relationships</li>
+            <li>Opportunity to create something more unique/special</li>
+        </ul>
+        <h4>Reasons Against</h4>
+        <ul>
+            <li>Serving content from a database creates new security concerns</li>
+            <li>The stack becomes more complicated</li>
+            <li>No viable CMS means I would have to code my display and query logic</li>
+            <li>Leaning curve presents a project risk; I could waste time building a custom CMS instead of getting my content on the web</li>
+        </ul>
+
+        <h3>Static Site Generator</h3>
+        <h4>Reasons For</h4>
+        <ul>
+            <li>Advantages of dynamic content with static hosting</li>
+            <li>Correct framework</li>
+        </ul>
+        <h4>Reasons Against</h4>
+        <ul>
+            <li>There are multiple to choose from; learning takes time.</li>
+            <li>Build process would become more complex.</li>
+            <li>Attaching external framework too early in this project could be a vector for code rot.</li>
+        </ul>
+    </main>
+
+    <pd-nav></pd-nav>
+
+</body>
+
+</html>
