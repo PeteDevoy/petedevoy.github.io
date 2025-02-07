@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="color-scheme" content="light dark">
+    <title>Peter Devoy - Clickbait Classifier</title>
+    <link rel="stylesheet" href="/main.css"></link>
+    <script src="/main.js"></script>
+</head>
+
+<body>
+    <pd-header></pd-header>
+    
+    <style>
+    </style>
+
+    <article>
+        <header>
+            <h1>Clickbait Classifier Using Machine Learning</h1>
+            <p>A logistic regression model for classifying clickbait headlines with CLI and HTTP interface which accepts text or a YouTube URL.</p>
+        </header>
+        <video controls  width="100%">
+            <source src="petedevoy-clickbait-classifier.webm" type="video/webm"/>
+        </video>
+        <p>
+            I had the idea to write a browser extension that would hide YouTube videos with clickbait titles and built this simple Python app as a
+            proof-of-concept of the core functionality.
+        <p>
+            The app uses a logistic regression model trained using bag-of-words features extracted from a labeled dataset of clickbait headlines found publicly online.
+        <p>
+            I was afraid bag-of-words would be a bit of a blunt tool for the job but I was happily surprised with the model's performance. That said, if this were a serious project, I would invest time into using complex feature extraction methods and additional tuning.
+        <hr>
+        <p>
+            If you're willing to wait for the server to spin up, the classifier can be tested live <a href="https://clickbait-classifier.onrender.com/" target="_blank">here</a>.
+        <p>
+            The code to train the model and run the app is available <a href="https://github.com/PeteDevoy/clickbait-classifier/" target="_blank">on GitHub</a>.
+    </article>
+
+    <pd-nav></pd-nav>
+
+</body>
+
+</html>
