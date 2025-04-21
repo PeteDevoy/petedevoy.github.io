@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light dark">
+
+  <title>BritishNationalGrid.uk – Peter Devoy Portfolio</title>
+  <meta name="description"
+    content="BritishNationalGrid.uk is a web app offering coordinate conversion and spatial referencing for the British geospatial community. Built by Peter Devoy.">
+
+  <link rel="stylesheet" href="/main.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/ol/ol.css">
+  <style>
+    #map {
+      width: 100%;
+      height: 300px;
+      border-radius: var(--radius);
+      margin-bottom: 1rem;
+    }
+  </style>
+  <link rel="stylesheet" crossorigin href=" index-l9hbH2WU.css">
+  <script type="module" src="bng-embed.js"></script>
+</head>
+
+<body>
+  <pd-header></pd-header>
+
+  <article>
+    <header>
+      <h1>BritishNationalGrid.uk – Coordinate Conversion and Tile Reference Tool</h1>
+      <p>
+        A long-running web app designed to support the British geospatial community with a lightweight tool for coordinate conversion and spatial referencing. It offers a clean, browser-based way to explore the British National Grid, convert between coordinate formats, and better understand the informal quadrant-based tile naming convention often used in large raster datasets.
+      </p>
+    </header>
+
+    <section>
+      <div id="map" role="application" aria-label="Preview of the British National Grid Map"></div>
+    </section>
+
+    <h2>Why I Built It</h2>
+    <p>
+      Running my geospatial software consultancy business, 3XE Ltd, gave me a professional interest in improving clarity
+      around the way spatial data is subdivided and referenced in the UK. While standard OS grid references and coordinate
+      transformations are well-served by existing tools, the ‘cardinal quadrant’ notation — such as <code>SS10NW</code> or <code>SU97SE</code> — 
+      is often encountered in academic and professional datasets without much explanation.
+    </p>
+    <p>
+      BritishNationalGrid.uk helps users visualise and work with that system more intuitively, whether they’re identifying files for aerial
+      imagery, working with map tiles, or teaching the structure of the grid.
+    </p>
+    <p>
+      As a concrete example: an aerial survey dataset might contain a file named <code>SU97NE.tiff</code>, referring to the northeastern quadrant
+      of the 10km square SU97 — which includes Windsor Castle. But the 5km square directly to the east of SU97NE won't appear adjacent in a list of files in the dataset.
+      Rather, it belongs to a different 10km and 100km tile and is named <code>TQ07NW.tiff</code>. This is the kind of nuance that BritishNationalGrid.uk is designed to clarify at a glance.
+    </p>
+
+    <h2>Features</h2>
+    <ul>
+      <li>Convert between easting/northing, OS grid references, and WGS84 lat/lon</li>
+      <li>Interactive overlay of the national grid on Ordnance Survey mapping</li>
+      <li>Visualisation and handling of 5km quadrant suffixes (e.g. NW, SE, etc.)</li>
+      <li>Keyboard shortcuts and copy-friendly formatting for ease of use</li>
+      <li>Optimised for fast loading and responsive use across devices</li>
+    </ul>
+
+    <h2>Longevity and Adoption</h2>
+    <p>
+      The app has grown steadily since launch, with no marketing beyond word of mouth. It now serves around 600 visits per day, with a portion of those being daily returning users — many of whom appear to rely on it as part of their regular workflows.
+    </p>
+    <p>
+      One recent piece of feedback simply read: “Excellent!” — and in many ways, that quietly appreciative tone reflects the project’s goal.
+    </p>
+
+    <h2>What It Represents</h2>
+    <p>
+      This is one of several small tools I’ve built to make spatial information more accessible. It reflects a broader interest in simplifying geospatial workflows and building interfaces that feel purposeful rather than overwhelming — particularly in contexts where clarity matters more than feature depth.
+    </p>
+
+    <h2>Try It Out</h2>
+    <p>
+      <a href="https://britishnationalgrid.uk" target="_blank" rel="noopener">BritishNationalGrid.uk</a>
+    </p>
+  </article>
+
+  <pd-nav></pd-nav>
+</body>
+
+</html>
