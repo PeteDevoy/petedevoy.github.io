@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="color-scheme" content="light dark">
+
+    <title>Multi-Client DJ Server – Peter Devoy Portfolio</title>
+    <meta name="description"
+        content="A Rust/WebSocket server that keeps two browser-based DJ decks in sync across every device in the room, so a mixer's master and headphone/cue outputs can be split across two separate machines. Built by Peter Devoy.">
+
+    <link rel="stylesheet" href="/main.css">
+    </link>
+    <script src="/main.js"></script>
+</head>
+
+<body>
+    <pd-header></pd-header>
+
+    <article>
+        <header>
+            <h1>Multi-Client DJ Server</h1>
+            <p>
+                The vision of this project is to be able to network two or three phones at a party to be able to use
+                them as a DJ system.
+            </p>
+        </header>
+
+        <h2>Background</h2>
+        <p>
+            I have been DJing for a long time and always been curious by technical problems involving audio and the
+            inner workings of DJ gear.
+            For example, around 2015 when the Web Audio API was becoming stable, I made a web page to emulate the
+            control tone of digital-vinyl, complete with a virtual scratchable turntables using the Canvas API.
+            With it, I was able to connect my phone to my live vinyl system via a 3.5mm to RCA cable and emulate a
+            turntable but smartphones then were not so responsive, browsers not so optimized and actual DJ equipment was
+            still needed.
+        </p>
+        <p>
+            Since then:
+        <ul>
+            <li>Smartphones have become more powerful and browsers more optimised.</li>
+            <li>I have been doing professional backend development in Rust for some years, including with WebSockets.
+            </li>
+            <li>Vibe coding has come into existence.</li>
+        </ul>
+        </p>
+        <p>
+            So, I arrived at new vision. Could I show up to a party with a couple of USB-C audio adapter cables and a
+            phone and
+            be able to DJ with a friend without DJ hardware?
+            From my experience the bare minimum for a DJ system is as follows:
+        <ul>
+            <li>Two decks.</li>
+            <li>A crossfader</li>
+            <li>A master output for the speakers</li>
+            <li>A headphone output for the DJ to preview the mix</li>
+            <li>Tempo control/pitch faders for beatmatching</li>
+        </ul>
+
+        If I could figure out a way to sync playback across two devices, I could split the master and headphone outputs
+        across two phones and have the Web Audio API handle the fading and pitch control... I started to research how
+        first-person shooter games
+        sync their state and player actions so smoothly and drew inspiration from that to guide the vibe coding.
+        </p>
+
+        <hr />
+        <b>The remainder of this post is authored by AI.</b>
+        <hr />
+
+        <h2>Borrowing From Game Netcode</h2>
+        <p>
+            The server is the sole authority on every deck's state — clients only ever send requests, never assert
+            outcomes. But past that, I ended up leaning on a handful of tricks from multiplayer game networking,
+            applied
+            to a mixer instead of a shooter:
+        </p>
+        <ul>
+            <li>A press of <strong>Play</strong> doesn't take effect the instant the server gets it — the server
+                picks
+                an instant 150ms in the future and broadcasts <em>that</em>, giving every client's network enough
+                slack
+                to receive and arm it. Same shape as a race game broadcasting a start time instead of a start
+                signal.
+            </li>
+            <li>Every deck carries a monotonically increasing revision number, so a client can silently drop
+                anything
+                stale or duplicated — the same job a sequence number does in UDP-based game netcode.</li>
+            <li>Dragging the tempo fader applies to your <em>own</em> screen immediately, client-side-prediction
+                style,
+                while everyone else watches it ~90ms behind the live edge, interpolating between the two samples
+                straddling that delayed instant — the "render the past, smoothly" trick that makes other players'
+                movement look continuous on a discrete update rate.</li>
+        </ul>
+        <p>
+            Underneath all of it sit three separate clocks that don't agree with each other by default: the server's
+            own
+            monotonic clock, each browser's <code>performance.now()</code>, and the Web Audio hardware clock that
+            actually decides when a speaker makes a sound. Each browser estimates its offset from the server with an
+            NTP-style round trip — burst of eight, keep whichever sample had the lowest travel time — and separately
+            learns its own fixed audio-output bias with a silent calibration probe, because it turns out browsers
+            can be
+            quietly, consistently wrong about their own latency by half a second.
+        </p>
+
+        <h2>What's Actually On The Decks</h2>
+        <p>
+            Each of the two decks gets a waveform with click-to-seek, a DJ-style cue point (hold to preview, release
+            to
+            snap back), a 16-beat loop with adjustable re-loop, tempo with pitch-lock, a bass-cut kill switch, and
+            background BPM detection. A room-wide crossfader blends the two decks into the master mix, with its own
+            slider for the blend curve — smooth equal-power at one end, a hard plateau cut at the other — visualised
+            live on a canvas so you can see the curve you've configured.
+        </p>
+        <p>
+            The headphone/master split is the feature the whole thing was built for: a client can register as a
+            headphone source and it'll only ever play decks with "pre-fader listen" enabled, muted from everything
+            else
+            — genuinely pre-fader, so it's unaffected by wherever the crossfader currently sits, exactly like the
+            real
+            thing.
+        </p>
+
+        <h2>Try It Out</h2>
+        <p>
+            Live at <a href="https://dj.bakun.in" target="_blank" rel="noopener">dj.bakun.in</a> -- open it on two
+            devices (or two tabs) to actually see the sync in action; on its own it just looks like a regular DJ
+            app.
+            Currently, you'll need to have the same audio files available to both devices for the full experience.
+        </p>
+        <p>
+            Code's on GitHub: <a href="https://github.com/PeteDevoy/dj-server" target="_blank"
+                rel="noopener">github.com/PeteDevoy/dj-server</a>.
+        </p>
+    </article>
+
+    <pd-nav></pd-nav>
+
+</body>
+
+</html>
